@@ -130,6 +130,3 @@ console.log("\n");
 let textoAleatorio = frutas [1] + ' ' + numeros [3] + ' ' + familia [4]
 console.log('No me tomen en serio, solo soy una variable de práctica: ' + textoAleatorio + ' :)');
 console.log("\n");
-
-
-
