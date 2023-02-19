@@ -4,7 +4,46 @@
     box-sizing: border-box;
 }
 
+.contiene-a{
+    border: solid 1px;
+    margin: 0 6px
+}
 
-.contiene-imagen{
-    border: solid !important;
+.card{
+    border: solid 1px;
+}
+
+.cuadro{
+    display: flex !important;
+    align-items: center !important;
+}
+
+.redes{
+        display: flex !important;
+        justify-content: center !important;
+        width: 100px !important;
+    } 
+
+@media only screen and (max-width: 992px) {
+    .input-group{
+        display: flex !important;
+        justify-content: center !important;
+        margin-bottom: 20px;
+    } 
+    .checkbox{
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .contiene-a{
+        border: none;
+    }
+}
+
+@media only screen and (max-width: 690px) {
+    .tarjeta{
+        display: flex !important;
+        justify-content: center !important;
+    } 
 }
