@@ -25,6 +25,11 @@
         width: 100px !important;
     } 
 
+.recuadro{
+    border: solid 1px !important;
+    
+}
+
 @media only screen and (max-width: 992px) {
     .input-group{
         display: flex !important;
