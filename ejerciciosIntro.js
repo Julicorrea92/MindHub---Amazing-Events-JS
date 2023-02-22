@@ -131,5 +131,60 @@ let textoAleatorio = frutas [1] + ' ' + numeros [3] + ' ' + familia [4]
 console.log('No me tomen en serio, solo soy una variable de práctica: ' + textoAleatorio + ' :)');
 console.log("\n");
 
+//
+//
+// let edadCompañerx = prompt('Ingrese su edad:');
+// console.log(edadCompañerx + ' años.');
+//
+//
+// if (miEdad >edadCompañerx){
+//     console.log('Mi edad es mayor a la de mi compañero');
+// }else if(miEdad < edadCompañerx){
+//     console.log('Mi edad es menor a la de mi compañero');
+// }
+// else {
+//     console.log('Mi edad es igual a la de mi compañero');
+// }
+// console.log("\n");
+
+// let mayoriaEdad = 18;
+// let soyMayorDeEdad = prompt('Ingrese su edad:');
+// console.log(soyMayorDeEdad + ' años.');
+
+// if (soyMayorDeEdad >= mayoriaEdad){
+    
+//     console.log('Soy mayor de edad: ' + soyMayorDeEdad+  ' años.');
+// }
+// else{
+//     console.log('No soy mayor de edad');
+// }
+
+//EJERCICIO SUBIR A LA ATRACCIÓN
+
+// let edadIngresada = prompt('Ingrese su edad por favor: ');
+// let alturaIngresada = prompt('Ingrese su altura: ');
+
+// if (edadIngresada > 6 && alturaIngresada >= 1.20){
+//     console.log('Puede subir a la atracción: ' + edadIngresada + ' años, ' + alturaIngresada + ' mts.');
+// }
+// else{
+//     console.log('No puede subir a la atracción');
+// }
+
+
+//CONTROL DE PASE VIP 
+
+// let paseInfo = prompt('Ingrese que tipo de pase tiene: VIP, NORMAL O LIMITADO');
+// let saldoPase = prompt('Ingrese su saldo');
+
+
+// if (paseInfo == 'VIP' || paseInfo== 'vip' || saldoPase >= 1000){
+
+//     console.log('La persona puede pasar');
+// }
+
+// else{
+//     console.log('La persona no puede pasar');
+// }
 
 
