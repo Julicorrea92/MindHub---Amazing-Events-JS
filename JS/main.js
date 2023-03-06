@@ -10,7 +10,7 @@ function traerTarjeta(event) {
                     <div class="mt-auto">
                         <div class="d-flex justify-content-between">
                             <p class="parrafo">${event.price}</p>
-                            <a href="Details.html" class="btn btn-danger">Ver Más</a>
+                            <a href="Details.html?id=${event._id}" class="btn btn-danger">Ver Más</a>
                         </div>
                     </div>
                 </div>
@@ -30,15 +30,15 @@ function filtradoCheck(event){
 //Función html para search params
 
 function encontrarDetail(event) {
-    return `<div class="card" style="width: 20rem; height: 17rem; border: 1px solid;">
-                <img src="#" alt="">
+    return `<div class="card p=3" style="width: 30rem; height: auto; border: 1px solid;">
+                <img src="${event.image}" alt="">
             </div>
             <div class="card" style="width: 20rem; border: 1px solid">
                 <div class="card-body">
-                <h4 class="card-title">Título</h4>
-                <h6 class="card-title mb-2 text-muted">Texto Descriptivo</h6>
-                <h6 class="card-title mb-2 text-muted">Texto Descriptivo</h6>
-                <h6 class="card-title mb-2 text-muted">Texto Descriptivo</h6>
+                <h4 class="card-title">${event.name}</h4>
+                <h6 class="card-title mb-2 text-muted">${event.description}</h6>
+                <h6 class="card-title mb-2 text-muted">${event.place}</h6>
+                <h6 class="card-title mb-2 text-muted">${event.date}</h6>
                 </div>
             </div>
             </div>`

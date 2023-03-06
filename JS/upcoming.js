@@ -12,6 +12,8 @@ for(let event of data.events){
     }
 }
 
+//Pasar search y procesarlo
+
 let tarjeta = document.getElementById('tarjeta');
 tarjeta.innerHTML = tarjetasFuturas;
 

@@ -23,9 +23,6 @@ console.log('Texto capturado: '+ texto);
 //Se captura el evento sin problemas y ya queda sin espacios y en minuscula
 
 
-
-
-
 let filtrados = data.events.filter(e => {
     return e.name.toLowerCase().includes(texto) || e.description.toLowerCase().includes(texto);
 });
