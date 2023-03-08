@@ -3,7 +3,7 @@
 let todasLasTarjetas = "";
 
 for (let event of data.events) {
-todasLasTarjetas += traerTarjeta(event);
+  todasLasTarjetas += traerTarjeta(event);
 }
 
 let tarjeta = document.getElementById('tarjeta');
@@ -13,34 +13,44 @@ tarjeta.innerHTML = todasLasTarjetas;
 //Pasar search y procesarlo
 
 let search = document.querySelector('form');
-search.addEventListener('submit', e => {
-//Si uso el event keyup no necesitaría el botón de búsqueda, aunque el boton queda obsoleto. Podría usarse como reset(?) 
-//Queda el submit que aplica mejor
-
-e.preventDefault();
-let texto = document.querySelector('.form-control').value.trim().toLowerCase();
-console.log('Texto capturado: '+ texto);
-//Se captura el evento sin problemas y ya queda sin espacios y en minuscula
-
-
-let filtrados = data.events.filter(e => {
-    return e.name.toLowerCase().includes(texto) || e.description.toLowerCase().includes(texto);
-});
-//Acá pude guardar en una variable más de un filtro
-
+  search.addEventListener('submit', e =>{
+    e.preventDefault();
+    let texto = document.querySelector('.form-control').value.trim().toLowerCase();  
+    let filtrados = data.events.filter(e => {
+      return e.name.toLowerCase().includes(texto) || e.description.toLowerCase().includes(texto);
+    }
+  );
 
 let mostrarFiltrados = '';
-
-if (filtrados.length > 0) {    
+  if (filtrados.length > 0){    
     for (let filtro of filtrados) {
-        mostrarFiltrados += traerTarjeta(filtro);
+      mostrarFiltrados += traerTarjeta(filtro);
     }
     document.getElementById('tarjeta').innerHTML = mostrarFiltrados;
-} else {
-    alert('The search returned no results, please try again.');
+    } 
+  else{
+      alert('The search returned no results, please try again.');
+    }
+  }
+);
+
+//Filtrar con checkbox
+
+categorias();
+
+let capturaCheck = document.querySelectorAll('input[type=checkbox]');
+
+let clickado = [];
+
+for (let clickCategoria of capturaCheck){
+  clickCategoria.addEventListener('click', (e) =>{
+    if (e.target.checked){
+      clickado.push(e.target.value)
+    }
+    console.log(clickado);
+  })
+ 
 }
-});
-//Todo concentrado en un solo condicional
 
 
 
@@ -49,6 +59,55 @@ if (filtrados.length > 0) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Abajo las aproximaciones iniciales al filtrado por busqueda.
 
 
 /*let stringTexto = texto.trim().toLowerCase();
