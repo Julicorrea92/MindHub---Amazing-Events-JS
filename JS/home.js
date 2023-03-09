@@ -1,113 +1,96 @@
-//Inyección de todas las tarjetas
+//Inyección de todas las tarjetas 
 
-let todasLasTarjetas = "";
+todasLasTarjetas()
 
-for (let event of data.events) {
-  todasLasTarjetas += traerTarjeta(event);
-}
-
-let tarjeta = document.getElementById('tarjeta');
-tarjeta.innerHTML = todasLasTarjetas;
-
-
-//Pasar search y procesarlo
+ //Pasar search y procesarlo
 
 let search = document.querySelector('form');
-  search.addEventListener('submit', e =>{
-    e.preventDefault();
-    let texto = document.querySelector('.form-control').value.trim().toLowerCase();  
-    let filtrados = data.events.filter(e => {
-      return e.name.toLowerCase().includes(texto) || e.description.toLowerCase().includes(texto);
-    }
+search.addEventListener('submit', e => {
+  e.preventDefault();
+  let texto = document.querySelector('.form-control').value.trim().toLowerCase();
+
+  let filtrados = data.events.filter(e => {
+
+    let filtroNombre = e.name.toLowerCase().includes(texto);
+    let filtroDescripcion = e.description.toLowerCase().includes(texto)
+
+    return (filtroNombre || filtroDescripcion)
+  }
   );
 
-let mostrarFiltrados = '';
-  if (filtrados.length > 0){    
+  let mostrarFiltrados = '';
+  if (filtrados.length > 0) {
     for (let filtro of filtrados) {
       mostrarFiltrados += traerTarjeta(filtro);
     }
     document.getElementById('tarjeta').innerHTML = mostrarFiltrados;
-    } 
-  else{
-      alert('The search returned no results, please try again.');
-    }
   }
+  else {
+    alert('The search returned no results, please try again.');
+  }
+}
 );
 
-//Filtrar con checkbox
+//Inyección de categorías
 
-categorias();
+cargarCategoriasHtml()
 
-let capturaCheck = document.querySelectorAll('input[type=checkbox]');
+//Captura de clicks
 
+let clickCategoria = document.querySelectorAll('input[type=checkbox]');
 let clickado = [];
 
-for (let clickCategoria of capturaCheck){
-  clickCategoria.addEventListener('click', (e) =>{
-    if (e.target.checked){
-      clickado.push(e.target.value)
+//for (let clickCategoria of capturaCheck){
+
+ clickCategoria.forEach(checkbox =>{
+    checkbox.addEventListener('click', e =>{
+      if (e.target.checked){
+        clickado.push(e.target.value); //Hasta acá hago que me guarde en el array de clickado los valores
+      } else {
+        let i = clickado.indexOf(e.target.value); //Acá guardo en la variable i el numero que corresponde al indice del array para operarlo
+        if (i > -1) {
+          clickado.splice(i, 1); //Si acá el indice del array cuyo value cargado con anterioridad me indica un valor mayor a -1, se le aplica el método slice a i para eliminar 1 elemento
+        }
+      } 
+      console.log(clickado);
+      if (clickado.length >0) {
+        let filtrados = data.events.filter(e => {
+          for (let categoria of clickado) {
+            if (e.category.includes(categoria)) {
+              return true;
+            }
+          }
+        });
+
+      let mostrarFiltrados = '';
+      for (let filtro of filtrados) {
+        mostrarFiltrados += traerTarjeta(filtro);
+      }
+      tarjeta.innerHTML = mostrarFiltrados;
     }
-    console.log(clickado);
   })
- 
-}
+}); 
+
+  //Queda armar el metodo para que vuelva la pagina a mostrar las tarjetas iniciales en cada página y reducción de código 
+
+  
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//ABAJO PROCESOS
 
+     /* let checkString ="";
+      if (clickado.filter(e=>{
+        e.target.value.includes(clickado)
+      })
+      ){
+        checkString += traerTarjeta(clickado.indexOf())
+      } */
 
+      //return (e.name.toLowerCase().includes(texto)) || (e.description.toLowerCase().includes(texto));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Abajo las aproximaciones iniciales al filtrado por busqueda.
 
 
 /*let stringTexto = texto.trim().toLowerCase();

@@ -9,7 +9,7 @@ function traerTarjeta(event) {
                     <p class="card-text">${event.description}</p>
                     <div class="mt-auto">
                         <div class="d-flex justify-content-between">
-                            <p class="parrafo">${event.price}</p>
+                            <p class="parrafo">Precio $${event.price}</p>
                             <a href="Details.html?id=${event._id}" class="btn btn-danger">Ver Más</a>
                         </div>
                     </div>
@@ -39,18 +39,18 @@ function encontrarDetail(event) {
                 <br>
                 <h5 class="card-title mb-2">${event.description}</h5>
                 <br>
-                <h5 class="card-title mb-2">${event.date}</h5>
+                <h5 class="card-title mb-2">Date ${event.date}</h5>
                 <br>
                 <h5 class="card-title mb-2">${event.category}</h5>
-                <h5 class="card-title mb-2">${event.place}</h5>
-                <h5 class="card-title mb-2">Price: $ ${event.price}</h5>
+                <h5 class="card-title mb-2">Place: ${event.place}</h5>
+                <h5 class="card-title mb-2">Price: $${event.price}</h5>
                 </div>
             </div>`;         
         }
 
-//Mostrar categorias
+//Mostrar categorias en el body
 
-function categorias(){
+function cargarCategoriasHtml(){
 
     let arrayCategoria =[];
         for(let event of data.events){
@@ -68,4 +68,94 @@ function categorias(){
     let checkCategoria = document.getElementById('cajaDeChecks');
     checkCategoria.innerHTML = incluirCategoria;
 }
-            
+
+//Mostrar las tarjetas
+
+function todasLasTarjetas(){
+    let todasLasTarjetas = "";
+  
+  for (let event of data.events) {
+    todasLasTarjetas += traerTarjeta(event);
+  }
+  
+  let tarjeta = document.getElementById('tarjeta');
+  tarjeta.innerHTML = todasLasTarjetas;
+  }
+
+//Mostrar tarjetas pasadas
+
+  function mostrarTarjetasPast(){
+
+    let tarjetasPasadas = "";
+let currentDate = new Date(data.currentDate);
+
+for(let event of data.events){
+
+  let eventDate = new Date(event.date);
+
+  if (eventDate < currentDate) {
+      tarjetasPasadas += traerTarjeta(event);
+  }
+}
+
+let tarjeta = document.getElementById('tarjeta');
+tarjeta.innerHTML = tarjetasPasadas;
+  
+}
+
+function mostrarTarjetasUpcoming() {
+    let tarjetasFuturas = "";
+    let currentDate = new Date(data.currentDate);
+
+    for (let event of data.events) {
+
+        let eventDate = new Date(event.date);
+
+        if (eventDate > currentDate) {
+            tarjetasFuturas += traerTarjeta(event);
+        }
+    }
+let tarjeta = document.getElementById('tarjeta');
+tarjeta.innerHTML = tarjetasFuturas;
+}
+
+
+
+
+
+
+ /*  function mostrarFiltrados(){
+
+    let mostrarFiltrados = '';
+    for (let filtro of filtrados) {
+    mostrarFiltrados += traerTarjeta(filtro);
+  }
+  tarjeta.innerHTML = mostrarFiltrados;
+}
+
+ */
+  
+
+//Funcion para mostrar cartar de check
+
+/* function aplicarFiltroCheck() {
+    let checkFiltrado = data.events.filter(e => {
+      
+      
+      let categoria = e.category.includes(clickado);
+  
+      return  (categoria || clickado.length === 0);
+      
+    })
+
+    let mostrarClickados = '';
+  if (clickado.length > 0){    
+    for (let clicks of clickado) {
+      mostrarClickados += traerTarjeta(clicks);
+    }
+    document.getElementById('tarjeta').innerHTML = mostrarClickados;
+    } 
+  else{
+      todasLasTarjetas;
+    }
+  } */
