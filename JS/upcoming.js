@@ -1,6 +1,19 @@
 //Inyección de tarjetas futuras
 
-mostrarTarjetasUpcoming();
+// mostrarTarjetasUpcoming();
+let tarjetasFuturas = "";
+    let currentDate = new Date(data.currentDate);
+
+    for (let event of data.events) {
+
+        let eventDate = new Date(event.date);
+
+        if (eventDate > currentDate) {
+            tarjetasFuturas += traerTarjeta(event);
+        }
+    }
+let tarjeta = document.getElementById('tarjeta');
+tarjeta.innerHTML = tarjetasFuturas;
 
 
 
@@ -87,11 +100,11 @@ let clickado = [];
         if (arrayFuture.length > 0){
           document.getElementById('tarjeta').innerHTML = filtradosFuturos
         }
-        else{ 
-          alert('The search returned no results, please try again.');//Si llego en lugar de alert va un modal o tarjeta 
-        }
+      }
+      else{ 
+        tarjeta.innerHTML = tarjetasFuturas;
       }
     })
   });
 
-    //Queda armar el metodo para que vuelva la pagina a mostrar las tarjetas iniciales en cada página y reducción de código 
+    

@@ -1,7 +1,21 @@
 //Inyección de tarjetas pasadas
 
-mostrarTarjetasPast()
+// mostrarTarjetasPast()
+let tarjetasPasadas = "";
+let currentDate = new Date(data.currentDate);
 
+for(let event of data.events){
+
+  let eventDate = new Date(event.date);
+
+  if (eventDate < currentDate) {
+      tarjetasPasadas += traerTarjeta(event);
+  }
+}
+
+let tarjeta = document.getElementById('tarjeta');
+tarjeta.innerHTML = tarjetasPasadas;
+  
 //Pasar search y procesarlo
 
 let search = document.querySelector('form');
@@ -85,12 +99,11 @@ let clickado = [];
         if (arrayFuture.length > 0){
           document.getElementById('tarjeta').innerHTML = filtradosFuturos
         }
-        else{ 
-          alert('The search returned no results, please try again.');//Si llego en lugar de alert va un modal o tarjeta 
-        }
+      }
+      else{ 
+        tarjeta.innerHTML = tarjetasPasadas;
       }
     })
   });
 
 
-  //Queda armar el metodo para que vuelva la pagina a mostrar las tarjetas iniciales en cada página y reducción de código 

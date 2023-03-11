@@ -1,6 +1,14 @@
 //Inyección de todas las tarjetas 
 
-todasLasTarjetas()
+// todasLasTarjetas()
+let todasLasTarjetas = "";
+  
+for (let event of data.events) {
+  todasLasTarjetas += traerTarjeta(event);
+}
+
+let tarjeta = document.getElementById('tarjeta');
+tarjeta.innerHTML = todasLasTarjetas;
 
  //Pasar search y procesarlo
 
@@ -68,8 +76,31 @@ let clickado = [];
       }
       tarjeta.innerHTML = mostrarFiltrados;
     }
+    else {
+      tarjeta.innerHTML = todasLasTarjetas; 
+    }
   })
 }); 
+
+
+
+
+/*
+
+
+    
+   
+
+      let mostrarFiltrados = '';
+      for (let filtro of filtrados) {
+        mostrarFiltrados += traerTarjeta(filtro);
+      }
+      tarjeta.innerHTML = mostrarFiltrados;
+    } else {
+      tarjeta.innerHTML = todasLasTarjetas; //Inyectar todas las tarjetas de nuevo
+    }
+  });
+}); */
 
   //Queda armar el metodo para que vuelva la pagina a mostrar las tarjetas iniciales en cada página y reducción de código 
 

@@ -71,39 +71,41 @@ function cargarCategoriasHtml(){
 
 //Mostrar las tarjetas
 
-function todasLasTarjetas(){
-    let todasLasTarjetas = "";
+// function todasLasTarjetas(){
+//     let todasLasTarjetas = "";
   
-  for (let event of data.events) {
-    todasLasTarjetas += traerTarjeta(event);
-  }
+//   for (let event of data.events) {
+//     todasLasTarjetas += traerTarjeta(event);
+//   }
   
-  let tarjeta = document.getElementById('tarjeta');
-  tarjeta.innerHTML = todasLasTarjetas;
-  }
+//   let tarjeta = document.getElementById('tarjeta');
+//   tarjeta.innerHTML = todasLasTarjetas;
+//   }
 
 //Mostrar tarjetas pasadas
 
-  function mostrarTarjetasPast(){
+//   function mostrarTarjetasPast(){
 
-    let tarjetasPasadas = "";
-let currentDate = new Date(data.currentDate);
+//     let tarjetasPasadas = "";
+// let currentDate = new Date(data.currentDate);
 
-for(let event of data.events){
+// for(let event of data.events){
 
-  let eventDate = new Date(event.date);
+//   let eventDate = new Date(event.date);
 
-  if (eventDate < currentDate) {
-      tarjetasPasadas += traerTarjeta(event);
-  }
-}
+//   if (eventDate < currentDate) {
+//       tarjetasPasadas += traerTarjeta(event);
+//   }
+// }
 
-let tarjeta = document.getElementById('tarjeta');
-tarjeta.innerHTML = tarjetasPasadas;
+// let tarjeta = document.getElementById('tarjeta');
+// tarjeta.innerHTML = tarjetasPasadas;
   
-}
+// }
 
-function mostrarTarjetasUpcoming() {
+//Mostrar tarjetas futuras
+
+/* function mostrarTarjetasUpcoming() {
     let tarjetasFuturas = "";
     let currentDate = new Date(data.currentDate);
 
@@ -117,10 +119,7 @@ function mostrarTarjetasUpcoming() {
     }
 let tarjeta = document.getElementById('tarjeta');
 tarjeta.innerHTML = tarjetasFuturas;
-}
-
-
-
+} */
 
 
 
