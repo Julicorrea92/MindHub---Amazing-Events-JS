@@ -23,8 +23,7 @@ search.addEventListener('submit', e => {
     let filtroDescripcion = e.description.toLowerCase().includes(texto)
 
     return (filtroNombre || filtroDescripcion)
-  }
-  );
+  });
 
   let mostrarFiltrados = '';
   if (filtrados.length > 0) {
@@ -34,7 +33,8 @@ search.addEventListener('submit', e => {
     document.getElementById('tarjeta').innerHTML = mostrarFiltrados;
   }
   else {
-    alert('The search returned no results, please try again.');
+    // alert('The search returned no results, please try again.');
+    tarjeta.innerHTML = '<p>The search returned no results, please try again.</p>'
   }
 }
 );
@@ -48,46 +48,114 @@ cargarCategoriasHtml()
 let clickCategoria = document.querySelectorAll('input[type=checkbox]');
 let clickado = [];
 
-//for (let clickCategoria of capturaCheck){
 
- clickCategoria.forEach(checkbox =>{
-    checkbox.addEventListener('click', e =>{
-      if (e.target.checked){
-        clickado.push(e.target.value); //Hasta acá hago que me guarde en el array de clickado los valores
-      } else {
-        let i = clickado.indexOf(e.target.value); //Acá guardo en la variable i el numero que corresponde al indice del array para operarlo
-        if (i > -1) {
-          clickado.splice(i, 1); //Si acá el indice del array cuyo value cargado con anterioridad me indica un valor mayor a -1, se le aplica el método slice a i para eliminar 1 elemento
-        }
-      } 
-      console.log(clickado);
-      if (clickado.length >0) {
-        let filtrados = data.events.filter(e => {
-          for (let categoria of clickado) {
-            if (e.category.includes(categoria)) {
-              return true;
-            }
+//Captura de clicks en los checkboxes
+
+clickCategoria.forEach(checkbox => {
+  checkbox.addEventListener('click', e => {
+    if (e.target.checked) {
+      clickado.push(e.target.value); //Si se chequea el checkbox, agregar su valor al array clickado
+    } else {
+      let i = clickado.indexOf(e.target.value);
+      if (i > -1) {
+        clickado.splice(i, 1); //Si se desmarca el checkbox, eliminar su valor del array clickado
+      }
+    }
+    console.log(clickado);
+    
+    //Si hay checkboxes seleccionados, filtrar por categorías   
+
+    if (clickado.length > 0) { 
+    let filtradosCategoria = data.events.filter(e => {
+        for (let categoria of clickado) {
+          if (e.category.includes(categoria)) {
+            return true;
           }
-        });
+        }
+      });
+      
+      //Filtrar los eventos filtrados por texto en caso de que se haya ingresado un valor en el campo de búsqueda
+
+      let texto = document.querySelector('.form-control').value.trim().toLowerCase();
+      let filtradosTexto = filtradosCategoria.filter(e => {
+
+        let filtroNombre = e.name.toLowerCase().includes(texto);
+        let filtroDescripcion = e.description.toLowerCase().includes(texto);
+
+        return (filtroNombre || filtroDescripcion);
+      });
 
       let mostrarFiltrados = '';
-      for (let filtro of filtrados) {
-        mostrarFiltrados += traerTarjeta(filtro);
+      if (filtradosTexto.length > 0) {
+        for (let filtro of filtradosTexto) {
+          mostrarFiltrados += traerTarjeta(filtro);
+        }
+        tarjeta.innerHTML = mostrarFiltrados;
+      } else {
+        tarjeta.innerHTML = 'The search returned no results, please try again.</p>';
       }
-      tarjeta.innerHTML = mostrarFiltrados;
+    } 
+    else { //Si no hay checkboxes seleccionados, filtrar solo por texto
+      let texto = document.querySelector('.form-control').value.trim().toLowerCase();
+      let filtradosTexto = data.events.filter(e => {
+
+        let filtroNombre = e.name.toLowerCase().includes(texto);
+        let filtroDescripcion = e.description.toLowerCase().includes(texto);
+        
+        return (filtroNombre || filtroDescripcion);
+      });
+
+      let mostrarFiltrados = '';
+      if (filtradosTexto.length > 0) {
+        for (let filtro of filtradosTexto) {
+          mostrarFiltrados += traerTarjeta(filtro);
+        }
+        tarjeta.innerHTML = mostrarFiltrados;
+      } else {
+        tarjeta.innerHTML = '<p>The search returned no results, please try again.</p>';
+      }
     }
-    else {
-      tarjeta.innerHTML = todasLasTarjetas; 
-    }
-  })
-}); 
+  });
+});
 
 
+/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//ABAJO PROCESOS
 
-/*
+// //for (let clickCategoria of capturaCheck){
 
+//  clickCategoria.forEach(checkbox =>{
+//     checkbox.addEventListener('click', e =>{
+//       if (e.target.checked){
+//         clickado.push(e.target.value); //Hasta acá hago que me guarde en el array de clickado los valores
+//       } else {
+//         let i = clickado.indexOf(e.target.value); //Acá guardo en la variable i el numero que corresponde al indice del array para operarlo
+//         if (i > -1) {
+//           clickado.splice(i, 1); //Si acá el indice del array cuyo value cargado con anterioridad me indica un valor mayor a -1, se le aplica el método slice a i para eliminar 1 elemento
+//         }
+//       } 
+//       console.log(clickado);
+//       if (clickado.length >0) {
+//         let filtrados = data.events.filter(e => {
+//           for (let categoria of clickado) {
+//             if (e.category.includes(categoria)) {
+//               return true;
+//             }
+//           }
+//         });
 
+//       let mostrarFiltrados = '';
+//       for (let filtro of filtrados) {
+//         mostrarFiltrados += traerTarjeta(filtro);
+//       }
+//       tarjeta.innerHTML = mostrarFiltrados;
+//     }
+//     else {
+//       tarjeta.innerHTML = todasLasTarjetas; 
+//     }
+//   })
+// }); 
     
    
 
@@ -105,12 +173,6 @@ let clickado = [];
   //Queda armar el metodo para que vuelva la pagina a mostrar las tarjetas iniciales en cada página y reducción de código 
 
   
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//ABAJO PROCESOS
 
      /* let checkString ="";
       if (clickado.filter(e=>{

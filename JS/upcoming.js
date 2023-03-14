@@ -15,18 +15,22 @@ let tarjetasFuturas = "";
 let tarjeta = document.getElementById('tarjeta');
 tarjeta.innerHTML = tarjetasFuturas;
 
-
-
 //Pasar search y procesarlo
 
 let search = document.querySelector('form');
 search.addEventListener('submit', e => {
     e.preventDefault();
+
     let texto = document.querySelector('.form-control').value.trim().toLowerCase();
     let filtrados = data.events.filter(e => {
-        return e.name.toLowerCase().includes(texto) || e.description.toLowerCase().includes(texto);
-      }
-    );
+
+        // return e.name.toLowerCase().includes(texto) || e.description.toLowerCase().includes(texto);
+
+    let filtroNombre = e.name.toLowerCase().includes(texto);
+    let filtroDescripcion = e.description.toLowerCase().includes(texto);
+
+    return (filtroNombre || filtroDescripcion);
+  });
 
     let currentDate = new Date(data.currentDate);
     let filtradosFuturos = "";
@@ -49,8 +53,7 @@ search.addEventListener('submit', e => {
       else{ 
         alert('The search returned no results, please try again.');//Si llego en lugar de alert va un modal o tarjeta 
       }
-    }
-  );
+    });
 
 //Filtrar con checkbox
 

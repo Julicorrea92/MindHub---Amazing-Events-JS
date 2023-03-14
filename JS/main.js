@@ -69,92 +69,171 @@ function cargarCategoriasHtml(){
     checkCategoria.innerHTML = incluirCategoria;
 }
 
-//Mostrar las tarjetas
+//Funcion para inyectar datos en las tablas
 
-// function todasLasTarjetas(){
-//     let todasLasTarjetas = "";
-  
-//   for (let event of data.events) {
-//     todasLasTarjetas += traerTarjeta(event);
-//   }
-  
-//   let tarjeta = document.getElementById('tarjeta');
-//   tarjeta.innerHTML = todasLasTarjetas;
-//   }
-
-//Mostrar tarjetas pasadas
-
-//   function mostrarTarjetasPast(){
-
-//     let tarjetasPasadas = "";
-// let currentDate = new Date(data.currentDate);
-
-// for(let event of data.events){
-
-//   let eventDate = new Date(event.date);
-
-//   if (eventDate < currentDate) {
-//       tarjetasPasadas += traerTarjeta(event);
-//   }
-// }
-
-// let tarjeta = document.getElementById('tarjeta');
-// tarjeta.innerHTML = tarjetasPasadas;
-  
-// }
-
-//Mostrar tarjetas futuras
-
-/* function mostrarTarjetasUpcoming() {
-    let tarjetasFuturas = "";
-    let currentDate = new Date(data.currentDate);
-
-    for (let event of data.events) {
-
-        let eventDate = new Date(event.date);
-
-        if (eventDate > currentDate) {
-            tarjetasFuturas += traerTarjeta(event);
-        }
-    }
-let tarjeta = document.getElementById('tarjeta');
-tarjeta.innerHTML = tarjetasFuturas;
-} */
-
-
-
- /*  function mostrarFiltrados(){
-
-    let mostrarFiltrados = '';
-    for (let filtro of filtrados) {
-    mostrarFiltrados += traerTarjeta(filtro);
-  }
-  tarjeta.innerHTML = mostrarFiltrados;
+function asistenciaMax(event){
+    return `<td><p>${event}</p></td>`
+}
+function asistenciaMin(event){
+    return `<td><p>${event}</p></td>`
+}
+function capacidadMax(event){
+    return `<td><p>${event}</p></td>`
 }
 
- */
-  
+function dibujarTablas(){
+    return `<div class="row">
+    <div class="d-flex justify-content-center">
+        <div class="box-grid m-5">
+            <table class="table table-bordered border-3 m-0">
+                <thead>
+                    <tr class="bg-secondary">
+                    <th colspan="3">Events statistics</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Events with highest percentage of attendance</td>
+                        <td>Events with lowest percentage of attendance</td>
+                        <td>Event with larger capacity</td>
+                    </tr>
+                    <tr>
+                        <td><p>${maximaAsistencia()}</p></td>
+                        <td><P>${minimaAsistencia()}</P></td>
+                        <td><P>${mayorCapacidad()}</P></td>
+                    </tr>
+                </tbody>
+                </table>
+                <table class="table table-bordered border-3 m-0">
+                <thead>
+                    <tr class="bg-secondary">
+                        <th colspan="3">Upcoming events statistics by category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Categories</td>
+                        <td>Revenues</td>
+                        <td>Percentage of attendance</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+                </table>
+                <table class="table table-bordered border-3">
+                <thead>
+                    <tr class="bg-secondary">
+                        <th colspan="3">Past Events statistic by category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Categories</td>
+                        <td>Revenues</td>
+                        <td>Percentage of attendance</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>`
+}
 
-//Funcion para mostrar cartar de check
+//Mayor asistencia
+function maximaAsistencia (){
+    let maxAsistencia = [];
 
-/* function aplicarFiltroCheck() {
-    let checkFiltrado = data.events.filter(e => {
-      
-      
-      let categoria = e.category.includes(clickado);
-  
-      return  (categoria || clickado.length === 0);
-      
-    })
-
-    let mostrarClickados = '';
-  if (clickado.length > 0){    
-    for (let clicks of clickado) {
-      mostrarClickados += traerTarjeta(clicks);
+    for (let asistencia of data.events){
+        if (asistencia.assistance != undefined){
+            maxAsistencia.push(asistencia.assistance);
+        }    
     }
-    document.getElementById('tarjeta').innerHTML = mostrarClickados;
-    } 
-  else{
-      todasLasTarjetas;
+    return (Math.max(...maxAsistencia));
+
+    
+
+
+    /* ${Object.keys(event)[8].charAt(0).toUpperCase() + Object.keys(event)[8].slice(1)}:</b> ${Object.values(event)[8]} */
+
+/* if(!(Object.keys(eventsData.events[index])[8] == "estimate") */
+    
+// let arrayEventos = data.events;
+
+   
+    
+    // arrayEventos.filter(e => {
+    //     let filtroNombre = e.assistance.includes(resultado);
+
+    //     return arrayEventos.name;
+
+    // }
+    // )
+    // console.log(arrayEventos.name);
+}
+
+
+//Menor Asistencia 
+function minimaAsistencia(){
+    let minAsistencia = [];
+
+for (let asistencia of data.events){
+    if (asistencia.assistance != undefined){
+        minAsistencia.push(asistencia.assistance);
+    }    
+}
+return (Math.min(...minAsistencia));
+}
+
+//Mayor capacidad
+
+function mayorCapacidad(){
+
+    let mayorCapacidad = [];
+    
+    for (let asistencia of data.events){
+        if (asistencia.capacity != undefined){
+            mayorCapacidad.push(asistencia.capacity);
+        }    
     }
-  } */
+    return (Math.max(...mayorCapacidad));
+}
+
+
