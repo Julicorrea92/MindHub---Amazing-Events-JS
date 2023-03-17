@@ -1,11 +1,25 @@
 //Inyección de tarjeta Details 
+let urlApi = "https://mindhub-xj03.onrender.com/api/amazing";   
+async function getDetails(urlApi) {
+    try {
+        const response = await fetch(urlApi);
+        // console.log(response);
+        // throw new Error("no se pudo obtener la data");
+        const data = await response.json();
 
-let queryString = location.search;
-let params = new URLSearchParams(queryString);
+    let queryString = location.search;
+    let params = new URLSearchParams(queryString);
+    console.log(params);
+    
+    let _id = params.get('id');
+    // console.log(_id);
+    console.log(_id);
+    let detail = data.events.find(event => event._id == _id);
+    document.getElementById('detalleTarjeta').innerHTML = encontrarDetail(detail);
 
-let _id = params.get('id');
-// console.log(_id);
-
-let detail = data.events.find(event => event._id == _id);
-document.getElementById('detalleTarjeta').innerHTML = encontrarDetail(detail);
+} catch(error) {
+    console.log(error)
+}
+}
+getDetails(urlApi);
 

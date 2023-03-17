@@ -1,4 +1,4 @@
-let data = {
+/* let data = {
     "currentDate": "2022-01-01",
     "events": [
       {
@@ -170,4 +170,6 @@ let data = {
         "price":250
       }
     ]
-  }
+  } */
+
+
