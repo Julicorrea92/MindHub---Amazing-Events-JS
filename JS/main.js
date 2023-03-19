@@ -71,15 +71,6 @@ function cargarCategoriasHtml(data){
 
 //Armar función para lograr la inyección dinámica de tablas
 
-function asistenciaMax(events){
-    return `<td><p>${events}</p></td>`
-}
-function asistenciaMin(events){
-    return `<td><p>${events}</p></td>`
-}
-function capacidadMax(events){
-    return `<td><p>${events}</p></td>`
-}
 
 function dibujarTablas(data){
     return `<div class="row">
@@ -88,20 +79,18 @@ function dibujarTablas(data){
             <table class="table table-bordered border-3 m-0">
                 <thead>
                     <tr class="bg-secondary">
-                    <th colspan="3">events statistics</th>
+                    <th colspan="3">Events statistics</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>events with highest percentage of attendance</td>
-                        <td>events with lowest percentage of attendance</td>
-                        <td>events with larger capacity</td>
-                    </tr>
+                        <td>Events with highest percentage of attendance</td>
+                        <td>Events with lowest percentage of attendance</td>
+                        <td>Events with larger capacity</td>
+                    </tr>                    
                     <tr>
-                        <td><p>${maximaAsistencia()}</p></td>
-                        <td><P>${minimaAsistencia()}</P></td>
-                        <td><P>${mayorCapacidad()}</P></td>
-                    </tr>
+                        
+                    </tr>                    
                 </tbody>
                 </table>
                 <table class="table table-bordered border-3 m-0">
@@ -141,79 +130,141 @@ function dibujarTablas(data){
 
 
 /* 
-Mayor porcentaje de asistencia: armar una captura de datos 
-cuando la operación de porcentaje entre (asistencia / capacidad)*100
+Mayor porcentaje de asistencia: armar una captura de datoscuando la operación de porcentaje entre (asistencia / capacidad)*100
 sea la mas alta. Idem para las de mas abajo
 */
 
-function maximaAsistencia (){
+function mostrarPorcentajes(events){//revisar plantilla despues
+    let container = document.querySelector('tbody');
+    let dibujarTablas = '';
+    events.forEach(event =>{
+        
+        let mayorPorcentaje = traerMayorPorcentaje(event);
+        let menorPorcentaje = traerMenorPorcentaje(event);
+        let mayorCapacidad = traerMayorCapacidad(event);
 
-    let maxAsistencia = [];
+        dibujarTablas += `<tr>
+        <td>${mayorPorcentaje}</td>
+        <td>${menorPorcentaje}</td>
+        <td>${mayorCapacidad}</td>
+    </tr>`;
     
+    })
+}
+
+
+function traerPorcentajeAsistencia(data){
+
+    let nombres = [];
+    for(let nombre of data.events){
+        if(!nombres.includes(nombre.name)&&(nombre.assistance != undefined)){//Acá tome de ejemplo lo armado en un primer planteo 
+            nombres.push(nombre.name);                                       //para tomarlo como condición de armado de array nombres
+        }
+    }
+    //Extraigo nombres 
+
+    // console.log(nombres);
+    // console.log('\n');
+    
+    let porcentaje = [];        
     for (let asistencia of data.events){
         if (asistencia.assistance != undefined){
-            maxAsistencia.push(asistencia.assistance);
-        }    
+            porcentaje.push((asistencia.assistance)/(asistencia.capacity)*100);
+       } 
+       //Acá conservo la propiedad de filtrado implicita de evento pasado y al push lo "cargo" ya con la operación hecha
     }
-   let maximaA = (Math.max(...maxAsistencia));
+    //console.log(porcentaje);
+    console.log('\n');
+    //Extraigo porcentaje ya calculado
     
-   let nombreMax = '';
+    let porcentajeRedondeado = porcentaje.map(function (num){
+        return num.toFixed(2);
+    });
+    
+    // console.log('Porcentajes redondeados');
+    // console.log(porcentajeRedondeado);
+    
 
-    for (let nombre of data.events){
-        if(nombre.assistance == maximaA){
-            nombreMax = nombre.name;
-        }   
-    }
-    return  nombreMax + ': ' +  maximaA;
-}
+    //Se va armar una variable con un objeto nuevo donde los numeros van a ser propiedad del objeto. Ejemplo en MDN de mozilla
+    //La idea es tomar el elemento sort que permite ordenar un objeto nuevo a partir de una de sus propiedades. 
 
 
+    let valores = nombres.map((name, index) => {
+        return { name: name, value: porcentajeRedondeado[index] };
+      });
 
-//Menor Asistencia 
-function minimaAsistencia(){
-    let minAsistencia = [];
+    // console.log('Nuevo Objeto');
+    // console.log(valores);
 
-for (let asistencia of data.events){
-    if (asistencia.assistance != undefined){
-        minAsistencia.push(asistencia.assistance);
-    }    
-}
-let minimaA = (Math.min(...minAsistencia));
+    let valoresOrdenados = valores.sort(function (a, b) {
+        if (a.value > b.value) {
+          return -1;
+        }
+        if (a.value < b.value) {
+          return 1;
+        }
+        // a must be equal to b
+        return 0;
+      });
+
+    //console.log(valoresOrdenados);
 
     
-   let nombreMin = '';
+    let mayorPorcentaje = valoresOrdenados.slice(0, 5);
+    console.log(mayorPorcentaje);
+    //Muestro la mitad correspondiente a mayor porcentaje
 
-    for (let nombre of data.events){
-        if(nombre.assistance == minimaA){
-            nombreMin = nombre.name;
-
-        }   
-    }
-    return  nombreMin + ': ' +  minimaA;
+    let menorPorcentaje = valoresOrdenados.slice(13, 18).reverse();
+    console.log(menorPorcentaje);
+    //Muestro la mitad correspondiente a menor porcentaje
 
 }
 
-//Mayor capacidad
 
-function mayorCapacidad(){
+function maximaCapacidad(data){
 
-    let mayorCapacidad = [];
+//Tercer columna mayor capacidad queda igual con un math.max
+ let mayorCapacidad = [];
+ 
+ for (let asistencia of data.events){
+     if (asistencia.capacity != undefined){
+         mayorCapacidad.push(asistencia.capacity);
+     }    
+ }
+ let mayorCap = (Math.max(...mayorCapacidad));
+
+ let nombreMayor = '';
+
+ for (let nombre of data.events){
+     if(nombre.capacity == mayorCap){
+         nombreMayor = nombre.name;
+     }   
+ }
+ console.log('\n');
+ console.log('Evento con mayor capacidad');
+ console.log(nombreMayor + ': ' +  mayorCap);  
+
+
+
+}
+
+
+
+// let cajaDePrueba = nombres.concat(porcentajeMayor);
+    // console.log(cajaDePrueba);
+    // //Prueba de concatenación junto los dos arrays "pelados"
     
-    for (let asistencia of data.events){
-        if (asistencia.capacity != undefined){
-            mayorCapacidad.push(asistencia.capacity);
-        }    
-    }
-    let mayorCap = (Math.max(...mayorCapacidad));
+    
+    //Tomo la iteración de asistencia para descartar los eventos futuros que son undefined 
+    //y de ahi tomo la capacidad que corresponde y hago la operación para obtener el porcentaje   
 
-    let nombreMayor = '';
+    // function comparar(a,b){
+    //     return b - a;
+    // }
 
-    for (let nombre of data.events){
-        if(nombre.capacity == mayorCap){
-            nombreMayor = nombre.name;
-        }   
-    }
-    return  nombreMayor + ': ' +  mayorCap;
-}
+    // //Establezco un criterio de comparación para el sort de mayor a menor 
+    // //donde b es mayor que a. Sino por definición hacia por orden en Unicode y mezclaba valores.
+    // //En un principio puse a-b pero me ordenaba de menor a mayor y luego ponia el
+    // //método .reverse() que para el caso funcionaba igual.
 
-
+   
