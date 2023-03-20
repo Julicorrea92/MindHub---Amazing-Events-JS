@@ -126,7 +126,6 @@ function clicksPasados(data){
 
 
 let urlApi = "https://mindhub-xj03.onrender.com/api/amazing";
-    
 async function getEventsData(urlApi) {
     try {
         const response = await fetch(urlApi);

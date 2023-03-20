@@ -19,7 +19,7 @@ async function getDetails(urlApi) {
 
 } catch(error) {
     console.log(error)
-}
+    }
 }
 getDetails(urlApi);
 
