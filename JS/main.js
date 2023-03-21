@@ -143,11 +143,85 @@ function traerPorcentajeAsistencia(data) {
     arrayCapacidad = mayorCapacidad.map(texto => {
         return texto.name + ': ' + texto.value + '.';
     });
-    console.log(arrayCapacidad);
-
 }
 
-//Mostrar tablas
+function esEventoPasado(event) {
+    let currentDate = new Date(event.currentDate);
+    let eventDate = new Date(event.date);
+    return eventDate < currentDate;
+  }
+  function esEventoFuturo(event) {
+    let currentDate = new Date(event.currentDate);
+    let eventDate = new Date(event.date);
+    return eventDate > currentDate;
+  }
+
+function traerEventosFuturos(data) {
+    
+    let eventosFuturos = "";
+    let categoria = [];
+
+    for (let event of data.events) {
+      if (!categoria.includes(event.category) && !esEventoPasado(event)) {
+        
+        let total = 0;
+        let estimado = 0;
+        let capacidad = 0;
+        let porcentajePromedio = 0;
+        categoria.push(event.category);
+        
+        for (let evento of data.events) {
+            if (evento.category == event.category &&  evento.estimate != undefined) {
+                estimado += evento.estimate;
+                capacidad += evento.capacity;
+                total = evento.estimate * evento.price;
+            }
+            porcentajePromedio = ((estimado)/capacidad)*100;
+        }
+        if (isNaN(porcentajePromedio)){
+            porcentajePromedio = 0;
+        }
+        eventosFuturos += crearTr(event, total, porcentajePromedio)
+      }
+    }
+    loadFuturos(eventosFuturos);  
+  }
+
+  function traerEventosPasados(data) {
+  
+    let eventosPasados = "";
+    let categoria = [];
+
+    for (let event of data.events) {
+        if (!categoria.includes(event.category) && !esEventoFuturo(event)) {
+            
+            
+        let total = 0;
+        let asistencia = 0;
+        let capacidad = 0;
+        let porcentajePromedio = 0;
+
+        categoria.push(event.category);
+        
+        
+        for (let evento of data.events) {
+            if (evento.category == event.category && evento.assistance != undefined) {
+                asistencia += evento.assistance;
+                capacidad += evento.capacity;
+                total = evento.assistance * evento.price;
+            }
+            porcentajePromedio = ((asistencia)/capacidad)*100;
+        }
+        if (isNaN(porcentajePromedio)){
+            porcentajePromedio = 0;
+        }
+        eventosPasados += crearTr(event, total, porcentajePromedio)
+      }
+    }
+    loadPasados(eventosPasados);  
+  }
+
+  //Mostrar tablas
 
 function loadPorcentajes() {
     let container = document.getElementById('gral');
@@ -168,15 +242,27 @@ function loadPorcentajes() {
     container.innerHTML = dibujarTablas;
 }
 
-let categoria = [];
-function listaCategorias(data) {
-    for (let events of data.events) {
-        if (!categoria.includes(events.category)) {
-            categoria.push(events.category);
-        }
-    }
-}
+  function loadFuturos(eventosFuturos){
+    let container = document.getElementById('futuro');
+    container.innerHTML = eventosFuturos;
+  }
 
-function loadFuturos(){
 
-}
+  function loadPasados(eventosPasados){
+    let container = document.getElementById('pasado');
+    container.innerHTML = eventosPasados;
+  }
+
+
+  function crearTr(evento, total, porcentaje) {
+    return `
+    <tr>
+    <td>${evento.category} </td>
+    <td>$${total} </td>
+    <td>${porcentaje.toFixed(2)}% </td>
+    </tr>
+    `
+  }
+
+
+ 

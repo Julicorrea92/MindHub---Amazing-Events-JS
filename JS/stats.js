@@ -7,12 +7,11 @@ async function getEventsData(urlApi) {
         const data = await response.json();
         console.log(data);
               
-        traerPorcentajeAsistencia(data);
-        listaCategorias(data);
+        traerPorcentajeAsistencia(data);       
         loadPorcentajes(data);
-           
-                   
-        
+        traerEventosFuturos(data);
+        traerEventosPasados(data);
+               
     } catch(error) {
         console.log(error)
     }
